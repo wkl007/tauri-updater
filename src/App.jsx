@@ -1,29 +1,37 @@
 import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
+import { getVersion } from '@tauri-apps/api/app'
 import { checkUpdate, installUpdate } from '@tauri-apps/api/updater'
 import { relaunch } from '@tauri-apps/api/process'
 
 function App () {
   const [count, setCount] = useState(0)
+  const [version, setVersion] = useState()
+  const [tip, setTip] = useState()
 
   useEffect(() => {
+    const version = async () => {
+      const res = await getVersion()
+      setVersion(res)
+    }
     const update = async () => {
       try {
         const { shouldUpdate, manifest } = await checkUpdate()
         if (shouldUpdate) {
-          alert('can update')
+          setTip(`Installing update ${manifest?.version}, ${manifest?.date}, ${manifest.body}`)
           // display dialog
           await installUpdate()
           // install complete, restart app
           await relaunch()
         }
       } catch (error) {
-        alert(JSON.stringify(error))
+        setTip(JSON.stringify(error))
       }
     }
 
     update()
+    version()
   }, [])
 
   return (<div className="App">
@@ -35,7 +43,8 @@ function App () {
         <img src={reactLogo} className="logo react" alt="React logo"/>
       </a>
     </div>
-    <h1>Vite + React</h1>
+    <h1>当前版本：{version}</h1>
+    <h2>{tip}</h2>
     <div className="card">
       <button onClick={() => setCount((count) => count + 1)}>
         count is {count}
