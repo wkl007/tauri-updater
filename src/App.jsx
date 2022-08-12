@@ -1,32 +1,31 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
 import { getVersion } from '@tauri-apps/api/app'
-import { checkUpdate, installUpdate } from '@tauri-apps/api/updater'
-import { relaunch } from '@tauri-apps/api/process'
+import { checkUpdate } from '@tauri-apps/api/updater'
+import './App.css'
+
+export const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 function App () {
-  const [count, setCount] = useState(0)
   const [version, setVersion] = useState()
-  const [tip, setTip] = useState()
+  const [newVersion, setNewVersion] = useState()
 
   useEffect(() => {
     const version = async () => {
       const res = await getVersion()
       setVersion(res)
     }
+
     const update = async () => {
       try {
+        console.log('start')
+        await delay(1e3)
+        console.log('delay')
         const { shouldUpdate, manifest } = await checkUpdate()
-        if (shouldUpdate) {
-          setTip(`Installing update ${manifest?.version}, ${manifest?.date}, ${manifest.body}`)
-          // display dialog
-          await installUpdate()
-          // install complete, restart app
-          await relaunch()
-        }
+        console.log(shouldUpdate, JSON.stringify(manifest))
+        setNewVersion(manifest.version)
+        console.log('end')
       } catch (error) {
-        setTip(JSON.stringify(error))
+        console.log(error)
       }
     }
 
@@ -35,27 +34,8 @@ function App () {
   }, [])
 
   return (<div className="App">
-    <div>
-      <a href="https://vitejs.dev" target="_blank">
-        <img src="/vite.svg" className="logo" alt="Vite logo"/>
-      </a>
-      <a href="https://reactjs.org" target="_blank">
-        <img src={reactLogo} className="logo react" alt="React logo"/>
-      </a>
-    </div>
-    <h1>当前版本：{version}</h1>
-    <h2>{tip}</h2>
-    <div className="card">
-      <button onClick={() => setCount((count) => count + 1)}>
-        count is {count}
-      </button>
-      <p>
-        Edit <code>src/App.jsx</code> and save to test HMR
-      </p>
-    </div>
-    <p className="read-the-docs">
-      Click on the Vite and React logos to learn more
-    </p>
+    <h1>current version: {version}</h1>
+    <h1>new version: {newVersion}</h1>
   </div>)
 }
 
