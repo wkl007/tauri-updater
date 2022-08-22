@@ -1,41 +1,42 @@
 import { useEffect, useState } from 'react'
 import { getVersion } from '@tauri-apps/api/app'
 import { checkUpdate } from '@tauri-apps/api/updater'
+import { getMatches } from '@tauri-apps/api/cli'
+import useWindowEvent from './useWindowEvent.js'
 import './App.css'
 
 export const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 function App () {
-  const [version, setVersion] = useState()
-  const [newVersion, setNewVersion] = useState()
+  const [args, setArgs] = useState([])
+
+  useWindowEvent('single-instance', (e) => {
+    console.log(222, e)
+  })
 
   useEffect(() => {
-    const version = async () => {
-      const res = await getVersion()
-      setVersion(res)
-    }
-
-    const update = async () => {
-      try {
-        console.log('start')
-        await delay(1e3)
-        console.log('delay')
-        const { shouldUpdate, manifest } = await checkUpdate()
-        console.log(shouldUpdate, JSON.stringify(manifest))
-        setNewVersion(manifest.version)
-        console.log('end')
-      } catch (error) {
-        console.log(error)
+    const match = async () => {
+      const matches = await getMatches()
+      console.log(111, matches)
+      if (matches.subcommand?.name === 'run') {
+        // `./your-app run $ARGS` was executed
+        const args = matches.subcommand?.matches.args
+        if ('debug' in args) {
+          // `./your-app run --debug` was executed
+        }
+      } else {
+        const args = matches.args
+        // `./your-app $ARGS` was executed
       }
     }
-
-    update()
-    version()
+    match()
   }, [])
 
   return (<div className="App">
-    <h1>current version: {version}</h1>
-    <h1>new version: {newVersion}</h1>
+    <ul>
+      参数列表
+      {args.map((i, index) => <li key={index}>{i}</li>)}
+    </ul>
   </div>)
 }
 

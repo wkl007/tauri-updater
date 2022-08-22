@@ -4,7 +4,8 @@
     "beforeBuildCommand": "yarn build",
     "beforeDevCommand": "yarn dev",
     "devPath": "http://localhost:5173",
-    "distDir": "../dist"
+    "distDir": "../dist",
+    "withGlobalTauri": true
   },
   "package": {
     "productName": "tauri-updater",
@@ -44,8 +45,28 @@
       "windows": {
         "certificateThumbprint": null,
         "digestAlgorithm": "sha256",
-        "timestampUrl": ""
+        "timestampUrl": "",
+        "wix": {
+          "language": "zh-CN"
+        }
       }
+    },
+    "cli": {
+      "description": "Tauri cli",
+      "args": [
+        {
+          "name": "type",
+          "description": "类型",
+          "index": 1,
+          "takesValue": true
+        },
+        {
+          "name": "path",
+          "description": "路径",
+          "index": 2,
+          "takesValue": true
+        }
+      ]
     },
     "security": {
       "csp": null
@@ -65,14 +86,6 @@
         "resizable": true,
         "title": "Tauri App",
         "width": 800
-      },
-      {
-        "label": "google",
-        "fullscreen": false,
-        "height": 600.0,
-        "width": 800.0,
-        "url": "https://www.google.com",
-        "resizable": true
       }
     ]
   }
