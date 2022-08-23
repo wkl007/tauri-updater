@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <DirectoryRef Id="TARGETDIR">
+      <Component Id="MyFragmentRegistryEntries" Guid="*">
+        <RegistryKey
+          Root="HKCR"
+          Key="SystemFileAssociations\.pdf\shell\tauri-updater"
+          Action="createAndRemoveOnUninstall"
+        >
+          <RegistryValue Type="string" Name="MUIVerb" Value="通过 tauri-updater 进行文件转换" />
+          <RegistryValue Type="string" Name="Icon" Value="[!Path]" />
+          <RegistryValue Type="string" Name="SubCommands" Value=""/>
+          <RegistryKey Key="shell">
+            <RegistryKey Key="html">
+              <RegistryValue Type="string" Name="MUIVerb" Value="转换为 html" />
+              <RegistryKey Key="command">
+                 <RegistryValue Type="string" Value='[!Path] "convert-html" "%1"' />
+              </RegistryKey>
+            </RegistryKey>
+            <RegistryKey Key="word">
+              <RegistryValue Type="string" Name="MUIVerb" Value="转换为 word" />
+              <RegistryKey Key="command">
+                 <RegistryValue Type="string" Value='[!Path] "convert-word" "%1"' />
+              </RegistryKey>
+            </RegistryKey>
+            <RegistryKey Key="excel">
+              <RegistryValue Type="string" Name="MUIVerb" Value="转换为 excel" />
+              <RegistryKey Key="command">
+                 <RegistryValue Type="string" Value='[!Path] "convert-excel" "%1"' />
+              </RegistryKey>
+            </RegistryKey>
+            <RegistryKey Key="epub">
+              <RegistryValue Type="string" Name="MUIVerb" Value="转换为 epub" />
+              <RegistryKey Key="command">
+                 <RegistryValue Type="string" Value='[!Path] "convert-epub" "%1"' />
+              </RegistryKey>
+            </RegistryKey>
+            <RegistryKey Key="mobi">
+              <RegistryValue Type="string" Name="MUIVerb" Value="转换为 mobi" />
+              <RegistryKey Key="command">
+                 <RegistryValue Type="string" Value='[!Path] "convert-mobi" "%1"' />
+              </RegistryKey>
+            </RegistryKey>
+          </RegistryKey>
+        </RegistryKey>
+
+        <RegistryKey
+          Root="HKCR"
+          Key="SystemFileAssociations\image\shell\tauri-updater"
+          Action="createAndRemoveOnUninstall"
+        >
+          <RegistryValue Type="string" Name="MUIVerb" Value="通过 tauri-updater 进行文件转换" />
+          <RegistryValue Type="string" Name="Icon" Value="[!Path]" />
+          <RegistryValue Type="string" Name="SubCommands" Value=""/>
+          <RegistryKey Key="shell">
+            <RegistryKey Key="html">
+              <RegistryValue Type="string" Name="MUIVerb" Value="转换为 html" />
+              <RegistryKey Key="command">
+                 <RegistryValue Type="string" Value='[!Path] "convert-html" "%1"' />
+              </RegistryKey>
+            </RegistryKey>
+            <RegistryKey Key="word">
+              <RegistryValue Type="string" Name="MUIVerb" Value="转换为 word" />
+              <RegistryKey Key="command">
+                 <RegistryValue Type="string" Value='[!Path] "convert-word" "%1"' />
+              </RegistryKey>
+            </RegistryKey>
+            <RegistryKey Key="excel">
+              <RegistryValue Type="string" Name="MUIVerb" Value="转换为 excel" />
+              <RegistryKey Key="command">
+                 <RegistryValue Type="string" Value='[!Path] "convert-excel" "%1"' />
+              </RegistryKey>
+            </RegistryKey>
+            <RegistryKey Key="epub">
+              <RegistryValue Type="string" Name="MUIVerb" Value="转换为 epub" />
+              <RegistryKey Key="command">
+                 <RegistryValue Type="string" Value='[!Path] "convert-epub" "%1"' />
+              </RegistryKey>
+            </RegistryKey>
+            <RegistryKey Key="mobi">
+              <RegistryValue Type="string" Name="MUIVerb" Value="转换为 mobi" />
+              <RegistryKey Key="command">
+                 <RegistryValue Type="string" Value='[!Path] "convert-mobi" "%1"' />
+              </RegistryKey>
+            </RegistryKey>
+          </RegistryKey>
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+</Wix>
